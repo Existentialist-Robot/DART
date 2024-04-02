@@ -16,10 +16,12 @@ https://www.raspberrypi.com/software/operating-systems/
 wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash
 <>11ALFCAXQ0yxYVXw7RT8UR_tFqFBOrwbM34lQdaU2met8rBcodE57DlrNrey8zuHrq3HYZ4WXSBU4xsKZh
 
+      
 git config --global.name = ""
 git config --global.email = ""
 gh auth config
 
+      
 ### Install Matrix Driver
 ##### GUIDE: https://learn.adafruit.com/adafruit-rgb-matrix-bonnet-for-raspberry-pi/driving-matrices
 ##### PACKAGE: https://github.com/hzeller/rpi-rgb-led-matrix/tree/master
