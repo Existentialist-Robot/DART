@@ -1,0 +1,33 @@
+password: dart633
+
+git clone https://github.com/Existentialist-Robot/DART
+
+Initial neopixel test
+	from root activate env
+		<source env/bin/activate>
+	then
+	<sudo --preserve-env=PATH,VIRTUAL_ENV python3 neopixel_test.py>
+
+
+Initial panel test
+	cd rpi-rgb-led-matrix
+	sudo ./demo -D=0 --led-cols=64 --led-rows=64 --led-chain=1
+	sudo ./demo -D=1 Tulips.521.ppm --led-no-hardware-pulse --led-cols=64 --led-rows=64 --led-chain=2 
+
+	sudo ./demo -D=1 Tulips.521.ppm --led-gpio-mapping=adafruit-hat --led-cols=64 --led-rows=64 --led-chain=2 
+
+For python binding panel examples
+	cd /home/pi/rpi-rgb-0-9led-matrix/bindings/python/samples 
+	sudo python grayscale-block.py --led-cols=64 --led-rows=64 --led-chain=2
+	sudo python runtext.py --led-cols=64 --led-rows=64 --led-chain=2
+	
+
+
+
+
+
+
+
+
+
+
