@@ -14,21 +14,26 @@ https://www.raspberrypi.com/software/operating-systems/
 
 ### Install GitHub
 wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bash
-<>11ALFCAXQ0yxYVXw7RT8UR_tFqFBOrwbM34lQdaU2met8rBcodE57DlrNrey8zuHrq3HYZ4WXSBU4xsKZh
 
 ```
 git config --global.name = ""
 git config --global.email = ""
 gh auth config
 ```
+Use https & and the following limited-scope token
 
+`
+<>11ALFCAXQ0yxYVXw7RT8UR_tFqFBOrwbM34lQdaU2met8rBcodE57DlrNrey8zuHrq3HYZ4WXSBU4xsKZh
+`
       
 ### Install Matrix Driver
 ##### GUIDE: https://learn.adafruit.com/adafruit-rgb-matrix-bonnet-for-raspberry-pi/driving-matrices
 ##### PACKAGE: https://github.com/hzeller/rpi-rgb-led-matrix/tree/master
 
+```
 curl https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/main/rgb-matrix.sh >rgb-matrix.sh
 sudo bash rgb-matrix.sh
+```
 
 Select 2. Convienience (since both the Matrix using the Quality compiled and the Neopixel with otherwise fight over the snd_bcm2835 kernel module)
 
@@ -37,26 +42,37 @@ Select 2. Convienience (since both the Matrix using the Quality compiled and the
 
 
 #### Make a virtual env (including global access to system-wide packages)
-
-sudo apt install python3-venv
-python3 -m venv env --system-site-packages 
+```
 sudo apt install python3-venv
 python3 -m venv env --system-site-packages
-
+```
+Activate the environment
+`
 source env/bin/activate
+`
 
 #### Install Neopixel
 
+```
 cd ~
 pip3 install --upgrade adafruit-python-shell
 wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
 sudo -E env PATH=$PATH python3 raspi-blinka.py
+```
 
 ### Run script 
 ##### Must have the virtual environment activated (the one that Blinka was install into)
+`
 sudo --preserve-env=PATH,VIRTUAL_ENV python3 matrix_and_neopixel_test.py 
+`
+
+### Run with target image and with the intended dimensions
 
 
+
+
+
+### Autorun script
 
 
 
