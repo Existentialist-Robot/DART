@@ -50,7 +50,8 @@ wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/m
 sudo -E env PATH=$PATH python3 raspi-blinka.py
 
 ### Run script 
-
+##### Must have the virtual environment activated (the one that Blinka was install into)
+sudo --preserve-env=PATH,VIRTUAL_ENV python3 matrix_and_neopixel_test.py 
 
 
 
