@@ -18,7 +18,9 @@ wget -qO- https://raw.githubusercontent.com/Botspot/pi-apps/master/install | bas
 
 `
 git config --global.name = ""
+
 git config --global.email = ""
+
 gh auth config
 `
 
