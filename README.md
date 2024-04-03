@@ -60,6 +60,11 @@ wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/m
 sudo -E env PATH=$PATH python3 raspi-blinka.py
 ```
 
+```
+sudo pip3 install rpi_ws281x adafruit-circuitpython-neopixel
+sudo python3 -m pip install --force-reinstall adafruit-blinka
+```
+
 ### Run script 
 ##### Must have the virtual environment activated (the one that Blinka was install into)
 `
