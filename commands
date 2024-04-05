@@ -6,7 +6,7 @@ Initial neopixel test
 	from root activate env
 		<source env/bin/activate>
 	then
-	<sudo --preserve-env=PATH,VIRTUAL_ENV python3 neopixel_test.py>
+	sudo --preserve-env=PATH,VIRTUAL_ENV python3 neopixel_test.py
 
 
 Initial panel test
@@ -20,6 +20,15 @@ For python binding panel examples
 	cd /home/pi/rpi-rgb-0-9led-matrix/bindings/python/samples 
 	sudo python grayscale-block.py --led-cols=64 --led-rows=64 --led-chain=2
 	sudo python runtext.py --led-cols=64 --led-rows=64 --led-chain=2
+	sudo python image-scroller.py -i=058.ppm --led-cols=64 --led-rows=64 --led-chain=2
+
+
+Combined
+	from root activate env
+		<source env/bin/activate>
+	then
+	
+	sudo --preserve-env=PATH,VIRTUAL_ENV python3 combined.py
 	
 
 
