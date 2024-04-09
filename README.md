@@ -38,7 +38,7 @@ sudo bash rgb-matrix.sh
 Select 2. Convienience (since both the Matrix using the Quality compiled and the Neopixel with otherwise fight over the snd_bcm2835 kernel module)
 
 ### Install Neopixel Library
-##### https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/installing-circuitpython-on-raspberry-pi
+##### https://github.com/rpi-ws281x/rpi-ws281x-python
 
 
 #### Make a virtual env (including global access to system-wide packages)
@@ -49,6 +49,12 @@ python3 -m venv env --system-site-packages
 Activate the environment
 `
 source env/bin/activate
+`
+
+Install Package
+
+`
+sudo pip install rpi_ws281x
 `
 
 #### Install Neopixel
@@ -68,7 +74,7 @@ sudo python3 -m pip install --force-reinstall adafruit-blinka
 ### Run script 
 ##### Must have the virtual environment activated (the one that Blinka was install into)
 `
-sudo --preserve-env=PATH,VIRTUAL_ENV python3 matrix_and_neopixel_test.py 
+sudo --preserve-env=PATH,VIRTUAL_ENV python3 combined.py 
 `
 
 ### Run with target image and with the intended dimensions
