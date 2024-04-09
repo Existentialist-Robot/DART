@@ -37,9 +37,7 @@ sudo bash rgb-matrix.sh
 
 Select 2. Convienience (since both the Matrix using the Quality compiled and the Neopixel with otherwise fight over the snd_bcm2835 kernel module)
 
-### Install Neopixel Library
-##### https://github.com/rpi-ws281x/rpi-ws281x-python
-
+### Install Strand Driver
 
 #### Make a virtual env (including global access to system-wide packages)
 ```
@@ -57,18 +55,11 @@ Install Package
 sudo pip install rpi_ws281x
 `
 
-#### Install Neopixel
+#### Install 
+##### https://github.com/rpi-ws281x/rpi-ws281x-python/tree/master
 
 ```
-cd ~
-pip3 install --upgrade adafruit-python-shell
-wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
-sudo -E env PATH=$PATH python3 raspi-blinka.py
-```
-
-```
-sudo pip3 install rpi_ws281x adafruit-circuitpython-neopixel
-sudo python3 -m pip install --force-reinstall adafruit-blinka
+pip install rpi_ws281x
 ```
 
 ### Run script 
