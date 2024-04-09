@@ -6,7 +6,7 @@ import time
 # Configuration for the LED matrix
 options = RGBMatrixOptions()
 options.rows = 64  # Change this to match your matrix's row count
-options.cols = 64  # Change this to match your matrix's column count
+options.cols = 128  # Change this to match your matrix's column count
 options.chain_length = 2  # Change if you have daisy-chained matrices
 options.parallel = 1  # Change if you use parallel chains of matrices
 options.hardware_mapping = 'adafruit-hat-pwm'  # Change to 'adafruit-hat' if using Adafruit's HAT
