@@ -44,11 +44,15 @@ for file_name, img in ppm_images:
 
 for file_name, img in ppm_images:
     print(f"Displaying {file_name} on the LED matrix.")
-    # Resize the image to fit your matrix size, if necessary
-    img = img.resize((options.cols, options.rows))
+    # Resize the image to half its size to fit your matrix size
+    new_size = (img.width // 2, img.height // 2)
+    img_resized = img.resize(new_size)
+
+    # # Resize the image to fit your matrix size, if necessary
+    # img = img.resize((options.cols, options.rows))
     
     # Display the image on the matrix
-    matrix.SetImage(img.convert('RGB'))
+    matrix.SetImage(img_resized.convert('RGB'))
 
     # Example of displaying each image for 5 seconds
     time.sleep(0.5)
