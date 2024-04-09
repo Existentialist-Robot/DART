@@ -23,8 +23,7 @@ gh auth config
 Use https & and the following limited-scope token
 
 `
-<>11ALFCAXQ0yxYVXw7RT8UR_tFqFBOrwbM34lQdaU2met8rBcodE57DlrNrey8zuHrq3HYZ4WXSBU4xsKZh
-`
+<>11ALFCAXQ0RuWdU6unUC3N_RDFx2uWHSsmvylIN3kAAQQuSKDZmCmpNdlmgCUlgfj1WF6XLZ6CAXBBvjnX`
       
 ### Install Matrix Driver
 ##### GUIDE: https://learn.adafruit.com/adafruit-rgb-matrix-bonnet-for-raspberry-pi/driving-matrices
