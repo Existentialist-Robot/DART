@@ -2,7 +2,6 @@ import os
 from PIL import Image
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
 import time
-
 from rpi_ws281x import PixelStrip, Color
 import argparse
 
@@ -21,7 +20,7 @@ compress = 2 # 2 will cut dims in half, 4 cuts dim by 4
 rotate = 90 # how much to rotate
 
 # Specify the path to the parent folder containing the .ppm files
-parent_folder_path = "../../../../frames_2"
+parent_folder_path = "../../../../Assets/frames_2"
 
 # Function to load all .ppm images into memory
 def load_ppm_images(folder_path):
@@ -40,38 +39,40 @@ def load_ppm_images(folder_path):
 
 # Load all .ppm images
 ppm_images = load_ppm_images(parent_folder_path)
+# num_images = len(ppm_images)
 
 # Process the loaded images
 for file_name, img in ppm_images:
     print(f"Processing {file_name}: {img.size[0]}x{img.size[1]}")
 
-
-for file_name, img in ppm_images:
-	print(f"Displaying {file_name} on the LED matrix.")
-	
-	# Squish image if needed
-	if compress is not 0:
-		new_size = (img.width // compress, img.height // compress)
-		img_resized = img.resize(new_size)
-		print("Confirmed new size: {}".format(new_size))
-	
-	# Rotate image if needed
-	if rotate != 0:
-		if compress != 0:
-			img_rotated = img_resized.rotate(rotate, expand=True)
-		else:
-			img_rotated = img.rotate(rotate, expand=True)
-		print("mode: {}".format(img_rotated.mode))
+while True:
+	for file_name, img in ppm_images:
+		print(f"Displaying {file_name} on the LED matrix.")
 		
-	if compress != 0 and rotate == 0:
-		matrix.SetImage(img_resized.convert('RGB'))
-	elif compress != 0 and rotate != 0 or compress != 0 and rotate != 0:
-		matrix.SetImage(img_rotated.convert('RGB'))
-	else:
-		matrix.SetImage(img.convert('RGB'))
+		# Squish image if needed
+		if compress != 0:
+			new_size = (img.width // compress, img.height // compress)
+			img_resized = img.resize(new_size)
+			print("Confirmed new size: {}".format(new_size))
+		
+		# Rotate image if needed
+		if rotate != 0:
+			if compress != 0:
+				img_rotated = img_resized.rotate(rotate, expand=True)
+			else:
+				img_rotated = img.rotate(rotate, expand=True)
+			print("mode: {}".format(img_rotated.mode))
+			
+		if compress != 0 and rotate == 0:
+			matrix.SetImage(img_resized.convert('RGB'))
+		elif compress != 0 and rotate != 0 or compress != 0 and rotate != 0:
+			matrix.SetImage(img_rotated.convert('RGB'))
+		else:
+			matrix.SetImage(img.convert('RGB'))
 
-    # Example of displaying each image for 5 seconds
-	time.sleep(0.05)
+	    # Example of displaying each image for x seconds
+		time.sleep(0.03)
+
 
 # Clear the matrix when done
 matrix.Clear()
@@ -79,4 +80,5 @@ matrix.Clear()
 
 # If you are done with processing and want to release memory, explicitly close each image:
 for _, img in ppm_images:
-    img.close()
+	img.close()
+

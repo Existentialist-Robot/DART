@@ -18,7 +18,7 @@ compress = 2 # 2 will cut dims in half, 4 cuts dim by 4
 rotate = 90 # how much to rotate
 
 # Specify the path to the parent folder containing the .ppm files
-parent_folder_path = "../../../../frames_2"
+parent_folder_path = "../../../../Assets/frames_2"
 
 # Function to load all .ppm images into memory
 def load_ppm_images(folder_path):
@@ -47,7 +47,7 @@ for file_name, img in ppm_images:
 	print(f"Displaying {file_name} on the LED matrix.")
 	
 	# Squish image if needed
-	if compress is not 0:
+	if compress != 0:
 		new_size = (img.width // compress, img.height // compress)
 		img_resized = img.resize(new_size)
 		print("Confirmed new size: {}".format(new_size))
