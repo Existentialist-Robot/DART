@@ -2,24 +2,7 @@
 import time
 from samplebase import SampleBase
 from PIL import Image
-# import board
-# import neopixel
 
-
-# # Choose an open pin connected to the Data In of the NeoPixel strip, i.e. board.D18
-# # NeoPixels must be connected to D10, D12, D18 or D21 to work.
-# pixel_pin = board.D10
-
-# # The number of NeoPixels
-# num_pixels = 201
-
-# # The order of the pixel colors - RGB or GRB. Some NeoPixels have red and green reversed!
-# # For RGBW NeoPixels, simply change the ORDER to RGBW or GRBW.
-# ORDER = neopixel.RGB
-
-# pixels = neopixel.NeoPixel(
-#     pixel_pin, num_pixels, brightness=0.2, auto_write=False, pixel_order=ORDER
-# )
 
 
 def wheel(pos):
@@ -75,23 +58,10 @@ class ImageScroller(SampleBase):
             double_buffer.SetImage(self.image, -xpos + img_width)
 
             double_buffer = self.matrix.SwapOnVSync(double_buffer)
-            
-            # ### Draw NeoPixels
-            # for i in range(num_pixels):
-            #     pixel_index = (i * 256 // num_pixels) + neopixel_cycle_count
-            #     pixels[i] = wheel(pixel_index & 255)
-            # pixels.show()
-            
-            # if neopixel_cycle_count >= 255:
-            #     neopixel_cycle_count = 0
-            # else:
-            #     neopixel_cycle_count += 1
                 
             frame_count = (frame_count+1)%100
 
             time.sleep(0.01)
-            
-
 
 # Main function
 # e.g. call with
@@ -101,3 +71,8 @@ if __name__ == "__main__":
     image_scroller = ImageScroller()
     if (not image_scroller.process()):
         image_scroller.print_help()
+        
+        
+        
+        
+        
