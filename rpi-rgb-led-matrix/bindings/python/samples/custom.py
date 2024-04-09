@@ -51,7 +51,7 @@ for file_name, img in ppm_images:
     matrix.SetImage(img.convert('RGB'))
 
     # Example of displaying each image for 5 seconds
-    time.sleep(5)
+    time.sleep(0.5)
 
 # Clear the matrix when done
 matrix.Clear()
