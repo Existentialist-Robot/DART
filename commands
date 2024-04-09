@@ -2,6 +2,24 @@ password: dart633
 
 git clone https://github.com/Existentialist-Robot/DART
 
+Just the matrix
+custom_2 
+sudo python custom_2.py --led-cols=64 --led-rows=64 --led-chain=2 --led-gpio-mapping=adafruit-hat --led-slowdown-gpio=4
+
+
+
+
+
+
+
+
+
+
+
+
+OLD
+
+
 Initial neopixel test
 	from root activate env
 		<source env/bin/activate>
@@ -30,13 +48,3 @@ Combined
 	
 	sudo --preserve-env=PATH,VIRTUAL_ENV python3 combined.py
 	
-
-
-
-
-
-
-
-
-
-
