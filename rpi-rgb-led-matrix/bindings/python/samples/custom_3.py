@@ -3,17 +3,22 @@ from PIL import Image
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
 import time
 
+from rpi_ws281x import PixelStrip, Color
+import argparse
+
 # Configuration for the LED matrix
 options = RGBMatrixOptions()
 options.rows = 64  # Change this to match your matrix's row count
 options.cols = 64  # Change this to match your matrix's column count
 options.chain_length = 2  # Change if you have daisy-chained matrices
 options.parallel = 1  # Change if you use parallel chains of matrices
-options.hardware_mapping = 'adafruit-hat-pwm'  # Change to 'adafruit-hat' if using Adafruit's HAT
+options.hardware_mapping = 'adafruit-hat'  # Change to 'adafruit-hat' if using Adafruit's HAT
 
 # Create the matrix object
 matrix = RGBMatrix(options=options)
 
+compress = 2 # 2 will cut dims in half, 4 cuts dim by 4
+rotate = 90 # how much to rotate
 
 # Specify the path to the parent folder containing the .ppm files
 parent_folder_path = "../../../../frames_2"
@@ -42,28 +47,31 @@ for file_name, img in ppm_images:
 
 
 for file_name, img in ppm_images:
-    print(f"Displaying {file_name} on the LED matrix.")
-    
-    ### if needing to rotate or resize
-
-    # Rotate
-    #img_rotated = img.rotate(90, expand=True)
-    print("Size before rotate: {}, {}".format(int(img.width), int(img.height)))
-
-    img_rotated = img.rotate(90, expand=True)
-    
-    # Resize the image to half its size to fit your matrix size
-    print("Current size after rotate: {}, {}".format(int(img_rotated.width), int(img_rotated.height)))
-    new_size = (int(img_rotated.width * 0.5), int(img_rotated.height * 0.5))
-    img_resized = img_rotated.resize(new_size)
-    
-    print("Confirmed new size: {}, {}".format(img_resized.width, img_resized.height))
-    
-    # Display the image on the matrix
-    matrix.SetImage(img_resized.convert('RGB'))
+	print(f"Displaying {file_name} on the LED matrix.")
+	
+	# Squish image if needed
+	if compress is not 0:
+		new_size = (img.width // compress, img.height // compress)
+		img_resized = img.resize(new_size)
+		print("Confirmed new size: {}".format(new_size))
+	
+	# Rotate image if needed
+	if rotate != 0:
+		if compress != 0:
+			img_rotated = img_resized.rotate(rotate, expand=True)
+		else:
+			img_rotated = img.rotate(rotate, expand=True)
+		print("mode: {}".format(img_rotated.mode))
+		
+	if compress != 0 and rotate == 0:
+		matrix.SetImage(img_resized.convert('RGB'))
+	elif compress != 0 and rotate != 0 or compress != 0 and rotate != 0:
+		matrix.SetImage(img_rotated.convert('RGB'))
+	else:
+		matrix.SetImage(img.convert('RGB'))
 
     # Example of displaying each image for 5 seconds
-    time.sleep(0.05)
+	time.sleep(0.05)
 
 # Clear the matrix when done
 matrix.Clear()
