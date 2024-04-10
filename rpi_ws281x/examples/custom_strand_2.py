@@ -40,12 +40,12 @@ def load_ppm_images(folder_path):
 
 # if the target pixel in the segment is at the end
 # reset segment to start of segment by seting the strand count equal to zero
-def maintain_index(strand):
+def maintainIndex(strand):
     if strand["count"] >= strand["len"]:
         strand["count"] = 0
         
 # implement brightness
-def set_bright(strand, style, count):
+def setBright(strand, style, count):
     r = int(strand["color"][style][0] * strand["dim"][count])
     g = int(strand["color"][style][1] * strand["dim"][count])
     b = int(strand["color"][style][2] * strand["dim"][count])
@@ -54,23 +54,31 @@ def set_bright(strand, style, count):
 # Define functions which animate LEDs in various ways.
 def colorWipe(strip, strand, count, style):
     """Wipe color across display a pixel at a time."""
-    maintain_index(strand)
-    r, g, b = set_bright(strand, style, count)
+    maintainIndex(strand)
+    r, g, b = setBright(strand, style, count)
     targ_pixel = strand["start_index"] + count
     strip.setPixelColor(targ_pixel, Color(r, g, b))
     strip.show()
     strand["count"] += 1
+    
 
-def theaterChase(strip, color, wait_ms=50, iterations=10):
+def theaterChase(strip, strand, count, style):
     """Movie theater light style chaser animation."""
-    for j in range(iterations):
-        for q in range(3):
-            for i in range(0, strip.numPixels(), 3):
-                strip.setPixelColor(i + q, color)
+    maintainIndex(strand)
+    r, g, b = setBright(strand, style, count)
+    targ_pixel = strand["start_index"] + count
+    strip.show()
+    
+    if strand["bin"] == 0:
+        for i in range(strand["start_index"],["start_index"] + strand["len"], strand["len"]/3):
+            strip.setPixelColor(i + targ_pixel, Color(r, g, b))
             strip.show()
-            time.sleep(wait_ms / 1000.0)
-            for i in range(0, strip.numPixels(), 3):
-                strip.setPixelColor(i + q, 0)
+            
+    elif strand["bin"] == 1:
+        for i in range(strand["start_index"],["start_index"] + strand["len"], strand["len"]/3):
+            strip.setPixelColor(i + targ_pixel, 0)
+            strip.show()
+        strand["count"] += 1
 
 def wheel(pos):
     """Generate rainbow colors across 0-255 positions."""
@@ -111,15 +119,6 @@ def theaterChaseRainbow(strip, wait_ms=50):
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i + q, 0)
 
-def setPixelBrightness(strip, pixel_id, r, g, b, brightness):
-    # if needed - we can pull the brightness based on the timing of the dim frames... 
-    # as opposed to count/index since that couples the speed of the styles with the "frame"
-    bright_r = int(r * brightness)
-    bright_g = int(g * brightness)
-    bright_b = int(b * brightness)
-    strip.setPixelColor(pixel_id, Color(bright_g, bright_r, bright_b))
-    strip.show()
-
 strands = {
     0 : {
         "start_index" : 0, # index of starting LED in the segment
@@ -129,7 +128,8 @@ strands = {
         "effect" : [0, 1, 2, 3], # mapping style
         "dir" : [0, 1, 0, 1], 
         "dim" : [], # dimness value for the strand at each frame that relates to video
-        "count" : " 0" # number to 
+        "count" : " 0" # index of target
+        "on" : "" 
     },
     1 : {
         "start_index" : 49,
@@ -139,7 +139,8 @@ strands = {
         "effect" : [0, 1, 2, 3], 
         "dir" : [0, 1, 0, 1], 
         "dim" : [], 
-        "count" : " 0"
+        "count" : 0
+        "bin" : 0
     },
     2 : {
         "start_index" : 99,
@@ -167,13 +168,14 @@ effects = {
     0 : colorWipe,
     1 : theaterChase,
     2 : rainbow,
-    3 : theaterChaseRainbow
+    3 : rainbowCycle,
+    4 : theaterChaseRainbow
 }
 
 # vary the following two to make the duration of strand styles animation match up 
 # as well as change the speed of the light effects 
 style_durations = [10, 5, 5, 8] 
-style_speeds = [0.5, 0.2, 0.5, 0.2]
+style_speeds = [50, 25, 50, 25]
 
 strand_nums = 0
 
@@ -208,11 +210,10 @@ if __name__ == '__main__':
     last_time = start_time
 
     while True:
-        for strand in range(len(strands)):
-            cur_strand = strands[strand]
-            effects[strand.effect[cur_style]](strip, cur_strand, frame_count, cur_style)
+        for name, strand in strands.items():
+            effects[strand["effect"][cur_style]](strip, strand, frame_count, cur_style)
             frame_count = (frame_count%frame_nums)+1
-            style_speeds[cur_style] / 1000.0
+            time.sleep(style_speeds[cur_style] / 1000.0)
         if last_time - time.time() > style_durations[cur_style]:
             if cur_style == len(cur_style):
                 cur_style = 0
@@ -220,3 +221,17 @@ if __name__ == '__main__':
                 cur_style +=1
             last_time = time.time()
 
+'''
+    while True:
+        for strand in range(len(strands)):
+            cur_strand = strands[strand]
+            effects[strand.effect[cur_style]](strip, cur_strand, frame_count, cur_style)
+            frame_count = (frame_count%frame_nums)+1
+            time.sleep(style_speeds[cur_style] / 1000.0)
+        if last_time - time.time() > style_durations[cur_style]:
+            if cur_style == len(cur_style):
+                cur_style = 0
+            else:
+                cur_style +=1
+            last_time = time.time()
+'''
