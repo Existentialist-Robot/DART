@@ -45,6 +45,9 @@ ppm_images = load_ppm_images(parent_folder_path)
 for file_name, img in ppm_images:
     print(f"Processing {file_name}: {img.size[0]}x{img.size[1]}")
 
+# for _, img in ppm_images:
+# 	img.close()
+
 while True:
 	for file_name, img in ppm_images:
 		print(f"Displaying {file_name} on the LED matrix.")
