@@ -2,8 +2,6 @@ import os
 from PIL import Image
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
 import time
-from rpi_ws281x import PixelStrip, Color
-import argparse
 
 # Configuration for the LED matrix
 options = RGBMatrixOptions()
