@@ -21,31 +21,32 @@ rotate = 90 # how much to rotate
 parent_folder_path = "../../../../Assets/frames_3/128pframes"
 
 # Function to load all .ppm images into memory
-def load_ppm_images(folder_path):
-    images = []
-    for root, dirs, files in os.walk(folder_path):
-        for file in sorted(files):
-            if file.endswith(".ppm"):
-                file_path = os.path.join(root, file)
-                try:
-                    img = Image.open(file_path)
-                    images.append((file, img))
-                    print(f"Loaded {file}")
-                except IOError:
-                    print(f"Could not load {file}")
-    return images
+def load_file_names(folder_path):
+	file_paths = []
+	for root, dirs, files in os.walk(folder_path):
+		for file in sorted(files):
+			if file.endswith(".ppm"):
+				file_path = os.path.join(root, file)
+				print(file_path)
+				file_paths.append(file_path)
+	return file_paths
 
 # Load all .ppm images
-ppm_images = load_ppm_images(parent_folder_path)
-# num_images = len(ppm_images)
+file_paths = load_file_names(parent_folder_path)
+num_images = len(file_paths)
+print(num_images)
 
 # Process the loaded images
-for file_name, img in ppm_images:
-    print(f"Processing {file_name}: {img.size[0]}x{img.size[1]}")
+# for file_name in file_paths:
+    # print(f"Processing {file_name}: {img.size[0]}x{img.size[1]}")
 
 while True:
-	for file_name, img in ppm_images:
-		print(f"Displaying {file_name} on the LED matrix.")
+	for file in file_paths:
+		img = Image.open(file)
+		# print(f"Displaying {file} on the LED matrix.")
+		
+		print(f"Processing {file}: {img.size[0]}x{img.size[1]}")
+
 		
 		# Squish image if needed
 		if compress != 0:
@@ -68,15 +69,13 @@ while True:
 		else:
 			matrix.SetImage(img.convert('RGB'))
 
-	    # Example of displaying each image for x seconds
-		time.sleep(0.066)
+		# Example of displaying each image for x seconds
+		time.sleep(0.02)
+		
+		img.close()
 
 
 # Clear the matrix when done
 matrix.Clear()
-    # Note: You don't need to open the image again with PIL, as it's already loaded.
 
-# If you are done with processing and want to release memory, explicitly close each image:
-for _, img in ppm_images:
-	img.close()
 
